@@ -2,16 +2,14 @@ const fs = require('fs');
 const chalk = require("chalk");
 
 
-const getNotes = function() {
+const getNotes = () =>  {
     return "Your notes...";    
 };
 
-const addNote = function (title, body) {
+const addNote = (title, body) => {
     const notes = loadNotes();
     let message = ""
-    const duplicateNotes = notes.filter(function (note) {
-        return note.title === title                
-    })
+    const duplicateNotes = notes.filter(note => note.title === title);
     
     if (duplicateNotes.length === 0) {
         notes.push({
@@ -25,14 +23,12 @@ const addNote = function (title, body) {
         message = chalk.redBright.inverse('Note title taken!');       
     }
     console.log(message);   
-}
+};
 
-const removeNote = function (title) {
+const removeNote = (title) => {
     const notes = loadNotes();
     let message = ""
-    const notesToKeep = notes.filter(function(note) {
-        return note.title !== title;
-    });
+    const notesToKeep = notes.filter(note => note.title !== title);
 
     if (notesToKeep.length < notes.length) {       
         saveNotes(notesToKeep);
@@ -42,29 +38,38 @@ const removeNote = function (title) {
     }
     
     console.log(message);    
-}
+};
 
-const saveNotes = function(notes) {
+const listNotes = () => {
+    const notes = loadNotes();
+    if (notes.length > 0) {
+        console.log(chalk.greenBright.inverse("Listing notes..."));        
+        notes.forEach(note => {    
+            console.log(chalk.italic.inverse(note.title));        
+            });
+
+    } else {
+        console.log(chalk.redBright.inverse("No note found!"));               
+    }    
+};
+
+const saveNotes = (notes) => {
     const dataJSON = JSON.stringify(notes);    
     fs.writeFileSync('notes.json', dataJSON);
 }
 
-const deleteNote = function(note) {
-    const dataJSON = JSON.stringify(note);
-    fs.rm
-}
-
-const loadNotes = function () {
+const loadNotes = () => {
     try {  
         const dataBuffer = fs.readFileSync('notes.json');
         return JSON.parse(dataBuffer.toString());        
     } catch (error) {
         return []        
     }
-}
+};
 
 module.exports = {
     getNotes: getNotes,
     addNote: addNote,
-    removeNote: removeNote
-}
+    removeNote: removeNote,
+    listNotes: listNotes
+};
