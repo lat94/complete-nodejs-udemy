@@ -1,22 +1,40 @@
+// node modules
+const path = require('path');
+//
+// npm modules
 const express = require('express');
-const app = express();
 
 const PORT = 3000;
+const app = express();
+const publicDirectoryPath = express.static(path.join(__dirname, '../public'));
 
-app.get('', (req, res) => {
-    res.send('supp hommie!');
+
+app.set('view engine', 'hbs');
+app.use(publicDirectoryPath);
+
+app.get('', (req, res) => {    
+    res.render('index', {
+        title: 'Weather',
+        name: 'Lucas'
+    });
 });
 
-app.get('/help', (req, res) => {
-    res.send('helping ya, hommie!');
+app.get('/about', (req, res) => {    
+    res.render('about', {
+        title: 'About me',
+        name: 'Lucas'
+    });
 });
 
-app.get('/about', (req, res) => {
-    res.send('this is all about ya, hommie!');
+app.get('/help', (req, res) => {    
+    res.render('help', {
+        title: 'Help me',
+        name: 'Lucas'
+    });
 });
 
 app.get('/weather', (req, res) => {
-    res.send('weather is getting tough for ya, hommie!');
+    res.send({forecast: 'it\'s really cold today', location: 'Araçatuba - SP'});
 });
 
 
