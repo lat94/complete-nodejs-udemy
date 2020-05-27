@@ -13,7 +13,7 @@ console.log(user);
 // Object destructuring
 
 const product = {
-    label: "Red Notebook",
+    label: 'Red Notebook',
     price: 3,
     stock: 201,
     salePrice: undefined
@@ -24,12 +24,12 @@ const {label, stock, rating = 5} = product
 console.log(label);
 
 
-const transaction = (type, { label, stock }) => {
+const transaction = (type, { label, stock = 0 } = {}) => {
     console.log(type, label, stock);
     
     
 }
 
-transaction("order", product);
+transaction('order', product);
 
 
