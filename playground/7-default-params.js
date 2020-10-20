@@ -1,5 +1,7 @@
-const greeter = (name = 'visitor', age) => {
-    console.log(`Hello, ${name}`)
+const greeter = (name = 'user', age) => {
+    console.log('Hello ' + name)
 }
+
+greeter('Andrew')
 
 greeter()

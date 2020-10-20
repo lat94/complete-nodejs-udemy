@@ -1,25 +1,22 @@
-const https = require('https');
-
-const url= `https://api.darksky.net/forecast/3526734330cc6f8f9be98fd9d20e3441/40,-75?units=si`;
+const https = require('https')
+const url = 'https://api.darksky.net/forecast/9d1465c6f3bb7a6c71944bdd8548d026/40,-75'
 
 const request = https.request(url, (response) => {
-    let data = '';
+    let data = ''
 
     response.on('data', (chunk) => {
-        data += chunk;
-        console.log(chunk);
-        
-    }); 
-    
+        data = data + chunk.toString()
+    })
+
     response.on('end', () => {
-        const body = JSON.parse(data);
-        console.log(body);
-    });
-});
+        const body = JSON.parse(data)
+        console.log(body)
+    })
+
+})
 
 request.on('error', (error) => {
-    console.error('An error', error);    
-});
+    console.log('An error', error)
+})
 
-request.end();
-
+request.end()

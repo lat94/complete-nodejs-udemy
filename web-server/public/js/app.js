@@ -1,26 +1,32 @@
-console.log('Cliente side javascript file is loaded');
+console.log('Client side javascript file is loaded!')
 
-
-
-
-const weatherForm = document.querySelector('form');
-const search = document.querySelector('input');
+const weatherForm = document.querySelector('form')
+const search = document.querySelector('input')
+const messageOne = document.querySelector('#message-1')
+const messageTwo = document.querySelector('#message-2')
 
 weatherForm.addEventListener('submit', (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    const location = search.value;
-    console.log(location);
+    const location = search.value
+
+    messageOne.textContent = 'LOADING...'
+    messageTwo.textContent = ''
 
     fetch(`http://localhost:3000/weather?address=${encodeURIComponent(location)}`).then((response) => {    
-        response.json().then(({ error, forecast }) => {
-            if (error) {
-                console.error(error);           
+        console.log('-----response------');
+        console.log(response);
+        console.log('-----------');
+        response.json().then((data) => {
+            if (data.error) {
+                messageOne.textContent = data.error
+                console.log(data.error)
             } else {
-                console.log(forecast);
-            }    
-        });    
+                messageOne.textContent = data.location
+                messageTwo.textContent = data.forecast
+                console.log(data.location)
+                console.log(data.forecast)
+            }
+        })
     })
-    
-
 })
